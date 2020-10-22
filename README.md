@@ -13,9 +13,10 @@ Details for Milestone are available on Canvas (left sidebar, Course Project) or 
 
 ## Describe your dataset in about 150-200 words
 
-My data set contains research from Taiwan and compares the predictive accuracy of the rate of default on credit cards using six data mining methods. It was formulated at Tamkang University in the department of Management in 2016. It was created for a predictive purpose of seeing if generalizations between good or bad credit card users exist and if this data could be used to classify people applying for a credit card. 
+My data set contains research from Taiwan and compares the predictive accuracy of the rate of default on credit cards using six data mining methods. It was formulated at Tamkang University in the department of Management in 2016. It was created for a predictive purpose of seeing if generalizations between good or bad credit card users exist and if this data could be used to classify people applying for a credit card. It was created for reference for those interested in business and management. 
 
 My data set contains demographics,(age, marital status, and education level), credit card limit, balance and payment amounts. It is from UC Irvine Machine Learning Repository. It contains integers, multivariate characteristics and has 24 attributes. It employs a binary variable (default payment), as the response variable and used 23 explanatory variables. It used the sorting smoothing method to estimate the real rate of default.
+
 
 
 ## Team Members
