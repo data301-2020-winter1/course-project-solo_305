@@ -2,7 +2,7 @@
 
 ## Our Pledge
 
-In the interest of fostering an open and welcoming environment, we as
+###In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to making participation in our project and
 our community a harassment-free experience for everyone, regardless of age, body
 size, disability, ethnicity, sex characteristics, gender identity and expression,
@@ -14,11 +14,11 @@ appearance, race, religion, or sexual identity and orientation.
 Examples of behavior that contributes to creating a positive environment
 include:
 
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+*1.Using welcoming and inclusive language
+* 2.Being respectful of differing viewpoints and experiences
+* 3.Gracefully accepting constructive criticism
+* 4.Focusing on what is best for the community
+* 5.Showing empathy towards other community members
 
 Examples of unacceptable behavior by participants include:
 
