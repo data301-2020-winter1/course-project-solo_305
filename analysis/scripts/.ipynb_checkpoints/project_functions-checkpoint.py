@@ -12,5 +12,12 @@ load_process('/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/dat
 
 def correlation(Col1, Col2):
     res = df.groupby([Col1, Col2]).size().unstack()
-    res['perc'] = (res[res.columns[1]]/(res[res.columns[0]] + res[res.columns[1]]))
+    res['percentage'] = (res[res.columns[1]]/(res[res.columns[0]] + res[res.columns[1]]))
     return res
+
+def boxplot1(feature1, feature2, feature3, width=16):
+    fig, ax1 = plt.subplots(ncols=1, figsize=(width,6))
+    s = sns.boxplot(ax = ax1, x=feature1, y=feature2, hue=feature3,
+                data=df, palette="PRGn",showfliers=False)
+    s.set_xticklabels(s.get_xticklabels(),rotation=90)
+    plt.show();
