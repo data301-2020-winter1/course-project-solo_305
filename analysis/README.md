@@ -13,3 +13,5 @@
 
 ### I then created my first method chain, it was fairly simple once I got the hang of it and then converted it into a function so it is more versatile and then created my first python module! 
 
+### I also did my first round of analysis on my two research questions, and was able to draw some initial conclusions. 
+
