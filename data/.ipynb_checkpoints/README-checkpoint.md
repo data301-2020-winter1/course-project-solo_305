@@ -1,9 +1,9 @@
 ***In this directory I will be putting all my raw data, and processed data as i go through this project***
-#1. *firstly I will have my raw data and then separate out my processed and analysed data in separate files*
-#2. Then I will use my data in here in my analysis folder
+# 1. *firstly I will have my raw data and then separate out my processed and analysed data in separate files*
+# 2. Then I will use my data in here in my analysis folder
 
 ***Variables***
-##There are ***25*** variables:
+## There are ***25*** variables:
 ___
 1. ***ID***: ID of each client
 2. ***LIMIT_BAL***: Amount of given credit in NT dollars (includes individual and family/supplementary credit
@@ -11,7 +11,7 @@ ___
 4. ***EDUCATION***: (1=graduate school, 2=university, 3=high school, 4=others, 5=unknown, 6=unknown)
 5. ***MARRIAGE***: Marital status (1=married, 2=single, 3=others)
 6. ***AGE***: Age in years
-7. ***PAY_0***: Repayment status in September, 2005 (-1=pay duly, 1=payment delay for one month, 2=payment delay for two months, ...  8=payment delay for eight months, 9=payment delay for nine months and above)
+7. ***PAY_0***: Repayment status in September, 2005 (0=pay duly, 1=payment delay for one month, 2=payment delay for two months, ...  8=payment delay for eight months, 9=payment delay for nine months and above)
 8. ***PAY_2***: Repayment status in August, 2005 (scale same as above)
 9. ***PAY_3***: Repayment status in July, 2005 (scale same as above)
 10.***PAY_4***: Repayment status in June, 2005 (scale same as above)

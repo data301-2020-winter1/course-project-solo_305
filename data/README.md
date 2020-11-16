@@ -1,9 +1,9 @@
 ***In this directory I will be putting all my raw data, and processed data as i go through this project***
-#1. *firstly I will have my raw data and then separate out my processed and analysed data in separate files*
-#2. Then I will use my data in here in my analysis folder
+# 1. *firstly I will have my raw data and then separate out my processed and analysed data in separate files*
+# 2. Then I will use my data in here in my analysis folder
 
 ***Variables***
-##There are ***25*** variables:
+## There are ***25*** variables:
 ___
 1. ***ID***: ID of each client
 2. ***LIMIT_BAL***: Amount of given credit in NT dollars (includes individual and family/supplementary credit
