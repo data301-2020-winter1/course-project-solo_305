@@ -240,10 +240,18 @@
       </connection>
       <aliases enabled='yes' />
       <column datatype='integer' name='[AGE]' role='measure' type='quantitative' />
-      <column datatype='integer' name='[Default]' role='dimension' type='ordinal' />
+      <column datatype='integer' name='[Default]' role='dimension' type='ordinal'>
+        <aliases>
+          <alias key='0' value='No Default' />
+          <alias key='1' value='Default' />
+        </aliases>
+      </column>
       <column caption='Education' datatype='integer' name='[EDUCATION]' role='measure' type='quantitative' />
       <column datatype='real' name='[ID]' role='dimension' type='ordinal' />
       <column caption='Limit Bal' datatype='real' name='[LIMIT_BAL]' role='measure' type='quantitative' />
+      <column datatype='integer' name='[Limit Bal (bin)]' role='dimension' type='quantitative'>
+        <calculation class='bin' decimals='4' formula='[LIMIT_BAL]' peg='0' size='65565' />
+      </column>
       <column caption='Marriage' datatype='integer' name='[MARRIAGE]' role='measure' type='quantitative' />
       <column caption='Pay 1' datatype='integer' name='[PAY_1]' role='measure' type='quantitative' />
       <column caption='Pay 2' datatype='integer' name='[PAY_2]' role='measure' type='quantitative' />
@@ -353,6 +361,14 @@
         <param name='target' value='Research question 2' />
       </command>
     </action>
+    <action caption='Filter 4 (generated)' name='[Action4]'>
+      <activation auto-clear='true' type='on-select' />
+      <source dashboard='Exploratory Analysis' type='sheet' worksheet='Limit Balance Grouped by Gender' />
+      <command command='tsc:tsl-filter'>
+        <param name='special-fields' value='all' />
+        <param name='target' value='Exploratory Analysis' />
+      </command>
+    </action>
   </actions>
   <worksheets>
     <worksheet name='Limit Balance Grouped by Age'>
@@ -391,6 +407,15 @@
               <breakdown value='auto' />
             </view>
             <mark class='Circle' />
+            <customized-tooltip>
+              <formatted-text>
+                <run fontcolor='#787878'>Their Limit Balance is:&#9;</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Their age is:&#9;</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:AGE:ok]>]]></run>
+              </formatted-text>
+            </customized-tooltip>
             <style>
               <style-rule element='mark'>
                 <format attr='mark-color' value='#b6992d' />
@@ -450,6 +475,15 @@
               <breakdown value='auto' />
             </view>
             <mark class='Bar' />
+            <customized-tooltip>
+              <formatted-text>
+                <run fontcolor='#787878'>Their Limit Balance is:&#9;</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Their gender is:(1=Male, 2=Female)	</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:SEX:ok]>]]></run>
+              </formatted-text>
+            </customized-tooltip>
             <style>
               <style-rule element='mark'>
                 <format attr='mark-color' value='#76b7b2' />
@@ -479,6 +513,7 @@
             <column datatype='integer' name='[AGE]' role='measure' type='quantitative' />
             <column caption='Education' datatype='integer' name='[EDUCATION]' role='measure' type='quantitative' />
             <column caption='Limit Bal' datatype='real' name='[LIMIT_BAL]' role='measure' type='quantitative' />
+            <column-instance column='[LIMIT_BAL]' derivation='Count' name='[cnt:LIMIT_BAL:qk]' pivot='key' type='quantitative' />
             <column-instance column='[EDUCATION]' derivation='CountD' name='[ctd:EDUCATION:qk]' pivot='key' type='quantitative' />
             <column-instance column='[AGE]' derivation='None' name='[none:AGE:qk]' pivot='key' type='quantitative' />
             <column-instance column='[EDUCATION]' derivation='None' name='[none:EDUCATION:qk]' pivot='key' type='quantitative' />
@@ -496,15 +531,7 @@
           </slices>
           <aggregation value='true' />
         </view>
-        <style>
-          <style-rule element='axis'>
-            <format attr='title' class='0' field='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:EDUCATION:qk]' scope='rows' value='Education Level' />
-            <format attr='auto-subtitle' class='0' field='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:EDUCATION:qk]' scope='rows' value='true' />
-            <format attr='subtitle' class='0' field='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:EDUCATION:qk]' scope='rows' value='' />
-            <encoding attr='space' class='0' domain-expand='false' field='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:EDUCATION:qk]' field-type='quantitative' scope='rows' type='space' />
-            <format attr='width' field='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:EDUCATION:qk]' value='44' />
-          </style-rule>
-        </style>
+        <style />
         <panes>
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
@@ -512,6 +539,15 @@
             </view>
             <mark class='Circle' />
             <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <customized-tooltip>
+              <formatted-text>
+                <run fontcolor='#787878'>Their Limit Balance is:&#9;</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[cnt:LIMIT_BAL:qk]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Their level of Education is:&#9;</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:EDUCATION:qk]>]]></run>
+              </formatted-text>
+            </customized-tooltip>
             <style>
               <style-rule element='mark'>
                 <format attr='size' value='0.69165748357772827' />
@@ -520,8 +556,8 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:EDUCATION:qk]</rows>
-        <cols>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]</cols>
+        <rows>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[cnt:LIMIT_BAL:qk]</rows>
+        <cols>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:EDUCATION:qk]</cols>
       </table>
       <simple-id uuid='{4B2942AC-38A3-410C-AC5C-0EC8AD6C97EA}' />
     </worksheet>
@@ -540,7 +576,12 @@
           </datasources>
           <datasource-dependencies datasource='federated.13tdmsc0ivsgm215zsn3t1usmpld'>
             <column datatype='integer' name='[AGE]' role='measure' type='quantitative' />
-            <column datatype='integer' name='[Default]' role='dimension' type='ordinal' />
+            <column datatype='integer' name='[Default]' role='dimension' type='ordinal'>
+              <aliases>
+                <alias key='0' value='No Default' />
+                <alias key='1' value='Default' />
+              </aliases>
+            </column>
             <column caption='Education' datatype='integer' name='[EDUCATION]' role='measure' type='quantitative' />
             <column datatype='real' name='[ID]' role='dimension' type='ordinal' />
             <column caption='Limit Bal' datatype='real' name='[LIMIT_BAL]' role='measure' type='quantitative' />
@@ -550,6 +591,7 @@
             <column-instance column='[Default]' derivation='None' name='[none:Default:ok]' pivot='key' type='ordinal' />
             <column-instance column='[EDUCATION]' derivation='None' name='[none:EDUCATION:ok]' pivot='key' type='ordinal' />
             <column-instance column='[EDUCATION]' derivation='None' name='[none:EDUCATION:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[LIMIT_BAL]' derivation='None' name='[none:LIMIT_BAL:ok]' pivot='key' type='ordinal' />
             <column-instance column='[LIMIT_BAL]' derivation='None' name='[none:LIMIT_BAL:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <filter class='categorical' column='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[Action (AGE,Default)]'>
@@ -564,12 +606,16 @@
               <groupfilter function='level-members' level='[none:EDUCATION:ok]' />
             </groupfilter>
           </filter>
+          <filter class='categorical' column='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[Action (Limit Bal)]'>
+            <groupfilter function='level-members' level='[none:LIMIT_BAL:ok]' user:ui-action-filter='[Action4]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
           <slices>
             <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]</column>
             <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:EDUCATION:qk]</column>
             <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[Action (Default,Education)]</column>
             <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[Action (AGE,Default)]</column>
             <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:AGE:qk]</column>
+            <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[Action (Limit Bal)]</column>
           </slices>
           <aggregation value='true' />
         </view>
@@ -584,6 +630,15 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <customized-tooltip>
+              <formatted-text>
+                <run fontcolor='#787878'>Default: (0 = No default, 1 = Default)	</run>
+                <run bold='true' fontcolor='#75a1c7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:Default:ok]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Number of People:&#9;</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:ID:qk]>]]></run>
+              </formatted-text>
+            </customized-tooltip>
           </pane>
         </panes>
         <rows>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:Default:ok]</rows>
@@ -702,7 +757,12 @@
           </datasources>
           <datasource-dependencies datasource='federated.13tdmsc0ivsgm215zsn3t1usmpld'>
             <column datatype='integer' name='[AGE]' role='measure' type='quantitative' />
-            <column datatype='integer' name='[Default]' role='dimension' type='ordinal' />
+            <column datatype='integer' name='[Default]' role='dimension' type='ordinal'>
+              <aliases>
+                <alias key='0' value='No Default' />
+                <alias key='1' value='Default' />
+              </aliases>
+            </column>
             <column caption='Education' datatype='integer' name='[EDUCATION]' role='measure' type='quantitative' />
             <column datatype='real' name='[ID]' role='dimension' type='ordinal' />
             <column caption='Limit Bal' datatype='real' name='[LIMIT_BAL]' role='measure' type='quantitative' />
@@ -747,6 +807,16 @@
               <color column='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[sum:EDUCATION:qk]' />
               <lod column='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[ctd:ID:qk]' />
             </encodings>
+            <customized-tooltip>
+              <formatted-text>
+                <run fontcolor='#787878'>Default is:&#9;</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:Default:ok]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Their education level is: </run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:EDUCATION:qk]>]]></run>
+                <run>Æ&#10;</run>
+              </formatted-text>
+            </customized-tooltip>
           </pane>
         </panes>
         <rows>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:EDUCATION:qk]</rows>
@@ -769,7 +839,12 @@
           </datasources>
           <datasource-dependencies datasource='federated.13tdmsc0ivsgm215zsn3t1usmpld'>
             <column datatype='integer' name='[AGE]' role='measure' type='quantitative' />
-            <column datatype='integer' name='[Default]' role='dimension' type='ordinal' />
+            <column datatype='integer' name='[Default]' role='dimension' type='ordinal'>
+              <aliases>
+                <alias key='0' value='No Default' />
+                <alias key='1' value='Default' />
+              </aliases>
+            </column>
             <column caption='Education' datatype='integer' name='[EDUCATION]' role='measure' type='quantitative' />
             <column caption='Limit Bal' datatype='real' name='[LIMIT_BAL]' role='measure' type='quantitative' />
             <column-instance column='[AGE]' derivation='None' name='[none:AGE:qk]' pivot='key' type='quantitative' />
@@ -794,6 +869,15 @@
             <encodings>
               <color column='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:AGE:qk]' />
             </encodings>
+            <customized-tooltip>
+              <formatted-text>
+                <run fontcolor='#787878'>Age is: </run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:AGE:qk]>]]></run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Their default is: (0=No Default, 1=Default)	</run>
+                <run bold='true' fontcolor='#4e79a7'><![CDATA[<[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:Default:ok]>]]></run>
+              </formatted-text>
+            </customized-tooltip>
           </pane>
         </panes>
         <rows>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:Default:ok]</rows>
@@ -809,7 +893,12 @@
           </datasources>
           <datasource-dependencies datasource='federated.13tdmsc0ivsgm215zsn3t1usmpld'>
             <column datatype='integer' name='[AGE]' role='measure' type='quantitative' />
-            <column datatype='integer' name='[Default]' role='dimension' type='ordinal' />
+            <column datatype='integer' name='[Default]' role='dimension' type='ordinal'>
+              <aliases>
+                <alias key='0' value='No Default' />
+                <alias key='1' value='Default' />
+              </aliases>
+            </column>
             <column caption='Education' datatype='integer' name='[EDUCATION]' role='measure' type='quantitative' />
             <column datatype='real' name='[ID]' role='dimension' type='ordinal' />
             <column caption='Limit Bal' datatype='real' name='[LIMIT_BAL]' role='measure' type='quantitative' />
@@ -851,6 +940,60 @@
         <cols>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:AGE:qk]</cols>
       </table>
       <simple-id uuid='{D9C0FBCF-0819-4C9E-B6E6-7C0B88ACF2D9}' />
+    </worksheet>
+    <worksheet name='Sheet 9'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Processeddata_Credit_Card' name='federated.13tdmsc0ivsgm215zsn3t1usmpld' />
+          </datasources>
+          <datasource-dependencies datasource='federated.13tdmsc0ivsgm215zsn3t1usmpld'>
+            <column datatype='integer' name='[AGE]' role='measure' type='quantitative' />
+            <column datatype='integer' name='[Default]' role='dimension' type='ordinal'>
+              <aliases>
+                <alias key='0' value='No Default' />
+                <alias key='1' value='Default' />
+              </aliases>
+            </column>
+            <column caption='Education' datatype='integer' name='[EDUCATION]' role='measure' type='quantitative' />
+            <column caption='Limit Bal' datatype='real' name='[LIMIT_BAL]' role='measure' type='quantitative' />
+            <column datatype='integer' name='[Limit Bal (bin)]' role='dimension' type='quantitative'>
+              <calculation class='bin' decimals='4' formula='[LIMIT_BAL]' peg='0' size='65565' />
+            </column>
+            <column-instance column='[LIMIT_BAL]' derivation='Count' name='[cnt:LIMIT_BAL:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[AGE]' derivation='None' name='[none:AGE:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Default]' derivation='None' name='[none:Default:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[EDUCATION]' derivation='None' name='[none:EDUCATION:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[LIMIT_BAL]' derivation='None' name='[none:LIMIT_BAL:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Limit Bal (bin)]' derivation='None' name='[none:Limit Bal (bin):qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <slices>
+            <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:AGE:qk]</column>
+            <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:EDUCATION:qk]</column>
+            <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <mark-sizing custom-mark-size-in-axis-units='1.0' mark-alignment='mark-alignment-left' mark-sizing-setting='marks-scaling-on' use-custom-mark-size='false' />
+            <encodings>
+              <color column='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:Default:ok]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[cnt:LIMIT_BAL:qk]</rows>
+        <cols>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:Limit Bal (bin):qk]</cols>
+        <show-full-range>
+          <column>[federated.13tdmsc0ivsgm215zsn3t1usmpld].[Limit Bal (bin)]</column>
+        </show-full-range>
+      </table>
+      <simple-id uuid='{8463C392-91A7-449E-A818-DB16D9C28568}' />
     </worksheet>
   </worksheets>
   <dashboards>
@@ -905,8 +1048,8 @@
           </layout-options>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='19' w='100000' x='0' y='0'>
-              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98000' id='18' param='vert' w='98400' x='800' y='1000'>
+            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='61' w='100000' x='0' y='0'>
+              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98000' id='60' param='vert' w='98400' x='800' y='1000'>
                 <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' h='4375' id='7' w='98400' x='800' y='1000'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -933,20 +1076,21 @@
       <layout-options>
         <title>
           <formatted-text>
-            <run bold='true' fontcolor='#ffffff' fontname='Superclarendon'>Dataset Overview and Description</run>
+            <run bold='true' fontcolor='#555555' fontname='Superclarendon'>Dataset Overview and Description</run>
             <run bold='true' fontname='Superclarendon'>Æ </run>
           </formatted-text>
         </title>
       </layout-options>
       <style>
         <style-rule element='table'>
-          <format attr='background-color' value='#e2e6f0' />
+          <format attr='background-color' value='#dfedeb' />
         </style-rule>
         <style-rule element='dash-title'>
-          <format attr='text-align' value='center' />
           <format attr='border-style' value='solid' />
           <format attr='border-width' value='4' />
-          <format attr='border-color' value='#ffffff' />
+          <format attr='text-align' value='center' />
+          <format attr='border-color' value='#666666' />
+          <format attr='background-color' value='#d4d4d4' />
         </style-rule>
         <style-rule element='dash-subtitle'>
           <format attr='background-color' value='#e6ecf0' />
@@ -960,9 +1104,9 @@
       <size sizing-mode='automatic' />
       <zones>
         <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='4' w='100000' x='0' y='0'>
-          <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='90720' id='5' param='vert' w='98740' x='630' y='8290'>
-            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='90720' id='6' w='98740' x='630' y='8290'>
-              <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='27106' id='8' w='45233' x='630' y='8290'>
+          <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='89109' id='5' param='vert' w='98740' x='630' y='9901'>
+            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='89109' id='6' w='98740' x='630' y='9901'>
+              <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='26625' id='8' w='45233' x='630' y='9901'>
                 <formatted-text>
                   <run bold='true' fontsize='14'> Introduction to my dataset and my interest in this topic </run>
                   <run>Æ&#10;&#10;</run>
@@ -976,7 +1120,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone _.fcp.SetMembershipControl.false...type='web' _.fcp.SetMembershipControl.true...type-v2='web' forceUpdate='' h='80446' id='9' param='https://www.kaggle.com/uciml/default-of-credit-card-clients-dataset' w='53507' x='45863' y='18564'>
+              <zone _.fcp.SetMembershipControl.false...type='web' _.fcp.SetMembershipControl.true...type-v2='web' forceUpdate='' h='79017' id='9' param='https://www.kaggle.com/uciml/default-of-credit-card-clients-dataset' w='53507' x='45863' y='19993'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -984,7 +1128,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='28341' id='20' w='45233' x='630' y='52228'>
+              <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='22977' id='20' w='45233' x='630' y='53059'>
                 <formatted-text>
                   <run bold='true' fontsize='14'>My Dataset : Defining the Variables, columns, and important characteristics</run>
                   <run bold='true' fontsize='12'>Æ </run>
@@ -1000,7 +1144,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='10274' id='86' w='53507' x='45863' y='8290'>
+              <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='10092' id='86' w='53507' x='45863' y='9901'>
                 <formatted-text>
                   <run fontsize='11'>Here is the original dataset, from Kaggle. It describes the original purpose and includes the orignal description and variables used. As I processed the data and dropped a lot of the original columns, I included the orginal source to provide some insight on the original data.</run>
                 </formatted-text>
@@ -1011,7 +1155,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' h='16832' id='89' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/download (2).jpeg' w='45233' x='630' y='35396'>
+              <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' h='16533' id='89' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/download (2).jpeg' w='45233' x='630' y='36526'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -1019,7 +1163,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' h='18441' id='90' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/images.jpeg' w='45233' x='630' y='80569'>
+              <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' h='22974' id='90' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/images.jpeg' w='45233' x='630' y='76036'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -1029,7 +1173,7 @@
               </zone>
             </zone>
           </zone>
-          <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' h='7300' id='7' w='98740' x='630' y='990'>
+          <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' h='8911' id='7' w='98740' x='630' y='990'>
             <zone-style>
               <format attr='border-color' value='#000000' />
               <format attr='border-style' value='none' />
@@ -1050,16 +1194,16 @@
           <layout-options>
             <title>
               <formatted-text>
-                <run bold='true' fontcolor='#ffffff' fontname='Superclarendon'>Dataset Overview and Description</run>
+                <run bold='true' fontcolor='#555555' fontname='Superclarendon'>Dataset Overview and Description</run>
                 <run bold='true' fontname='Superclarendon'>Æ </run>
               </formatted-text>
             </title>
           </layout-options>
-          <size maxheight='850' minheight='850' sizing-mode='vscroll' />
+          <size maxheight='900' minheight='900' sizing-mode='vscroll' />
           <zones>
-            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='140' w='100000' x='0' y='0'>
-              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='139' param='vert' w='98740' x='630' y='990'>
-                <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' h='7300' id='7' w='98740' x='630' y='990'>
+            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='184' w='100000' x='0' y='0'>
+              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='183' param='vert' w='98740' x='630' y='990'>
+                <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' h='8911' id='7' w='98740' x='630' y='990'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1068,7 +1212,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='27106' id='8' w='45233' x='630' y='8290'>
+                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='26625' id='8' w='45233' x='630' y='9901'>
                   <formatted-text>
                     <run bold='true' fontsize='14'> Introduction to my dataset and my interest in this topic </run>
                     <run>Æ&#10;&#10;</run>
@@ -1083,7 +1227,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='10274' id='86' w='53507' x='45863' y='8290'>
+                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='10092' id='86' w='53507' x='45863' y='9901'>
                   <formatted-text>
                     <run fontsize='11'>Here is the original dataset, from Kaggle. It describes the original purpose and includes the orignal description and variables used. As I processed the data and dropped a lot of the original columns, I included the orginal source to provide some insight on the original data.</run>
                   </formatted-text>
@@ -1095,7 +1239,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='web' _.fcp.SetMembershipControl.true...type-v2='web' fixed-size='280' forceUpdate='' h='80446' id='9' is-fixed='true' param='https://www.kaggle.com/uciml/default-of-credit-card-clients-dataset' w='53507' x='45863' y='18564'>
+                <zone _.fcp.SetMembershipControl.false...type='web' _.fcp.SetMembershipControl.true...type-v2='web' fixed-size='280' forceUpdate='' h='79017' id='9' is-fixed='true' param='https://www.kaggle.com/uciml/default-of-credit-card-clients-dataset' w='53507' x='45863' y='19993'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1104,7 +1248,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' fixed-size='127' h='16832' id='89' is-fixed='true' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/download (2).jpeg' w='45233' x='630' y='35396'>
+                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' fixed-size='124' h='16533' id='89' is-fixed='true' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/download (2).jpeg' w='45233' x='630' y='36526'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1113,7 +1257,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='28341' id='20' w='45233' x='630' y='52228'>
+                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='22977' id='20' w='45233' x='630' y='53059'>
                   <formatted-text>
                     <run bold='true' fontsize='14'>My Dataset : Defining the Variables, columns, and important characteristics</run>
                     <run bold='true' fontsize='12'>Æ </run>
@@ -1130,7 +1274,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' fixed-size='139' h='18441' id='90' is-fixed='true' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/images.jpeg' w='45233' x='630' y='80569'>
+                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' fixed-size='176' h='22974' id='90' is-fixed='true' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/images.jpeg' w='45233' x='630' y='76036'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1156,7 +1300,7 @@
       <layout-options>
         <title>
           <formatted-text>
-            <run fontcolor='#ffffff' fontname='Superclarendon'>Exploratory Analysis</run>
+            <run fontcolor='#555555' fontname='Superclarendon'>Exploratory Analysis</run>
           </formatted-text>
         </title>
       </layout-options>
@@ -1168,10 +1312,12 @@
           <format attr='text-align' value='center' />
           <format attr='border-style' value='solid' />
           <format attr='border-width' value='4' />
-          <format attr='border-color' value='#ffffff' />
+          <format attr='border-color' value='#666666' />
+          <format attr='background-color' value='#d4d4d4' />
         </style-rule>
         <style-rule element='dash-subtitle'>
           <format attr='color' value='#1b1b1b' />
+          <format attr='background-color' value='#e9edf5' />
         </style-rule>
         <style-rule element='dash-text'>
           <format attr='color' value='#1b1b1b' />
@@ -1308,14 +1454,14 @@
           <layout-options>
             <title>
               <formatted-text>
-                <run fontcolor='#ffffff' fontname='Superclarendon'>Exploratory Analysis</run>
+                <run fontcolor='#555555' fontname='Superclarendon'>Exploratory Analysis</run>
               </formatted-text>
             </title>
           </layout-options>
           <size maxheight='1700' minheight='1700' sizing-mode='vscroll' />
           <zones>
-            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='143' w='100000' x='0' y='0'>
-              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='142' param='vert' w='98740' x='630' y='990'>
+            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='185' w='100000' x='0' y='0'>
+              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='184' param='vert' w='98740' x='630' y='990'>
                 <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' fixed-size='51' h='7302' id='15' w='98740' x='630' y='990'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -1481,6 +1627,10 @@
         </style-rule>
         <style-rule element='story-title'>
           <format attr='text-align' value='center' />
+          <format attr='border-style' value='solid' />
+          <format attr='border-color' value='#000000' />
+          <format attr='border-width' value='2' />
+          <format attr='background-color' value='#f5f5f5' />
         </style-rule>
       </style>
       <size sizing-mode='automatic' />
@@ -1490,12 +1640,18 @@
             <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' h='3589' id='3' w='98740' x='630' y='990' />
             <zone _.fcp.SetMembershipControl.false...type='flipboard-nav' _.fcp.SetMembershipControl.true...type-v2='flipboard-nav' h='12500' id='4' is-fixed='true' paired-zone-id='5' removable='false' w='98740' x='630' y='4579' />
             <zone _.fcp.SetMembershipControl.false...type='flipboard' _.fcp.SetMembershipControl.true...type-v2='flipboard' h='81931' id='5' paired-zone-id='4' removable='false' w='98740' x='630' y='17079'>
-              <flipboard active-id='2' nav-type='caption' show-nav-arrows='true'>
+              <flipboard active-id='3' nav-type='caption' show-nav-arrows='true'>
                 <story-points>
                   <story-point caption='Dataset overview and Description' captured-sheet='Dataset Overview and Description' id='1' />
                   <story-point caption='Exploratory Analysis' captured-sheet='Exploratory Analysis' id='2' />
                   <story-point caption='Research question 1' captured-sheet='Research question' id='3' />
-                  <story-point caption='Research question 2' captured-sheet='Research question 2' id='4' />
+                  <story-point caption='Research question 2' captured-sheet='Research question 2' id='4'>
+                    <capturedDeltas>
+                      <worksheet name='Sheet 1'>
+                        <selection-collection />
+                      </worksheet>
+                    </capturedDeltas>
+                  </story-point>
                 </story-points>
               </flipboard>
             </zone>
@@ -1514,19 +1670,23 @@
       <layout-options>
         <title>
           <formatted-text>
-            <run fontcolor='#ffffff' fontname='Superclarendon'>What is the distribution of the credit card limits in this dataset and is there any correlation between the limit balance and default rate?</run>
+            <run fontcolor='#666666' fontname='Superclarendon'>What is the distribution of the credit card limits in this dataset and is there any correlation between the limit balance and default rate?</run>
           </formatted-text>
         </title>
       </layout-options>
       <style>
         <style-rule element='table'>
-          <format attr='background-color' value='#e2e6f0' />
+          <format attr='background-color' value='#dfedeb' />
         </style-rule>
         <style-rule element='dash-title'>
           <format attr='text-align' value='center' />
           <format attr='border-style' value='solid' />
           <format attr='border-width' value='4' />
-          <format attr='border-color' value='#ffffff' />
+          <format attr='border-color' value='#555555' />
+          <format attr='background-color' value='#d4d4d4' />
+        </style-rule>
+        <style-rule element='dash-subtitle'>
+          <format attr='background-color' value='#e9edf5' />
         </style-rule>
         <style-rule element='dash-text'>
           <format attr='font-family' value='Times New Roman' />
@@ -1547,7 +1707,7 @@
         <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='4' w='100000' x='0' y='0'>
           <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='32' param='horz' w='98740' x='630' y='990'>
             <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='5' param='vert' w='98740' x='630' y='990'>
-              <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' h='8416' id='7' w='98740' x='630' y='990'>
+              <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' fixed-size='70' h='9653' id='7' is-fixed='true' w='98740' x='630' y='990'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -1555,8 +1715,8 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='89604' id='6' w='98740' x='630' y='9406'>
-                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' h='46658' id='21' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/Image 2020-11-27 at 12.59 PM (1).jpeg' w='52877' x='630' y='52352'>
+              <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='88367' id='6' w='98740' x='630' y='10643'>
+                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' h='46015' id='21' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/Image 2020-11-27 at 12.59 PM (1).jpeg' w='52876' x='630' y='52995'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1564,7 +1724,7 @@
                     <format attr='margin' value='4' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='38243' id='25' w='45863' x='53507' y='9406'>
+                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='37713' id='25' w='45864' x='53506' y='10643'>
                   <formatted-text>
                     <run>Æ&#10;</run>
                     <run bold='true' fontsize='11'>Summary of findings: </run>
@@ -1586,7 +1746,7 @@
                     <format attr='margin' value='4' />
                   </zone-style>
                 </zone>
-                <zone h='41832' id='30' name='Limit Balances Grouped by Level of Education' w='45863' x='53507' y='57178'>
+                <zone h='41257' id='30' name='Limit Balances Grouped by Level of Education' w='45864' x='53506' y='57753'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1594,7 +1754,7 @@
                     <format attr='margin' value='4' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='filter' _.fcp.SetMembershipControl.true...type-v2='filter' h='9529' id='33' name='Limit Balances Grouped by Level of Education' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]' values='database' w='45863' x='53507' y='47649'>
+                <zone _.fcp.SetMembershipControl.false...type='filter' _.fcp.SetMembershipControl.true...type-v2='filter' h='9397' id='33' name='Limit Balances Grouped by Level of Education' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]' values='database' w='45864' x='53506' y='48356'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1602,7 +1762,7 @@
                     <format attr='margin' value='4' />
                   </zone-style>
                 </zone>
-                <zone h='42946' id='38' name='Limit Balance Grouped by Gender' w='52877' x='630' y='9406'>
+                <zone h='42352' id='38' name='Limit Balance Grouped by Gender' w='52876' x='630' y='10643'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1620,9 +1780,9 @@
             <format attr='margin' value='8' />
           </zone-style>
         </zone>
-        <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' h='4703' id='107' w='10087' x='40347' y='9777'>
+        <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='4703' id='107' w='10087' x='37589' y='13985'>
           <formatted-text>
-            <run>( 1 = Male, 2 = Female)</run>
+            <run>(1 = Male, 2 = Female)</run>
           </formatted-text>
         </zone>
         <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' h='4703' id='108' w='23798' x='74547' y='62129'>
@@ -1662,15 +1822,15 @@
           <layout-options>
             <title>
               <formatted-text>
-                <run fontcolor='#ffffff' fontname='Superclarendon'>What is the distribution of the credit card limits in this dataset and is there any correlation between the limit balance and default rate?</run>
+                <run fontcolor='#666666' fontname='Superclarendon'>What is the distribution of the credit card limits in this dataset and is there any correlation between the limit balance and default rate?</run>
               </formatted-text>
             </title>
           </layout-options>
           <size maxheight='1350' minheight='1350' sizing-mode='vscroll' />
           <zones>
-            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='142' w='100000' x='0' y='0'>
-              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='141' param='vert' w='98740' x='630' y='990'>
-                <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' h='8416' id='7' w='98740' x='630' y='990'>
+            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='184' w='100000' x='0' y='0'>
+              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='183' param='vert' w='98740' x='630' y='990'>
+                <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' fixed-size='70' h='9653' id='7' w='98740' x='630' y='990'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1679,7 +1839,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='280' h='42946' id='38' is-fixed='true' name='Limit Balance Grouped by Gender' w='52877' x='630' y='9406'>
+                <zone fixed-size='280' h='42352' id='38' is-fixed='true' name='Limit Balance Grouped by Gender' w='52876' x='630' y='10643'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1688,7 +1848,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='38243' id='25' w='45863' x='53507' y='9406'>
+                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='37713' id='25' w='45864' x='53506' y='10643'>
                   <formatted-text>
                     <run>Æ&#10;</run>
                     <run bold='true' fontsize='11'>Summary of findings: </run>
@@ -1711,9 +1871,9 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' h='4703' id='107' w='10087' x='40347' y='9777'>
+                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='4703' id='107' w='10087' x='37589' y='13985'>
                   <formatted-text>
-                    <run>( 1 = Male, 2 = Female)</run>
+                    <run>(1 = Male, 2 = Female)</run>
                   </formatted-text>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -1723,7 +1883,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' fixed-size='280' h='46658' id='21' is-fixed='true' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/Image 2020-11-27 at 12.59 PM (1).jpeg' w='52877' x='630' y='52352'>
+                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' fixed-size='280' h='46015' id='21' is-fixed='true' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/Image 2020-11-27 at 12.59 PM (1).jpeg' w='52876' x='630' y='52995'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1732,7 +1892,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='filter' _.fcp.SetMembershipControl.true...type-v2='filter' h='9529' id='33' name='Limit Balances Grouped by Level of Education' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]' values='database' w='45863' x='53507' y='47649'>
+                <zone _.fcp.SetMembershipControl.false...type='filter' _.fcp.SetMembershipControl.true...type-v2='filter' h='9397' id='33' name='Limit Balances Grouped by Level of Education' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:LIMIT_BAL:qk]' values='database' w='45864' x='53506' y='48356'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1741,7 +1901,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='280' h='41832' id='30' is-fixed='true' name='Limit Balances Grouped by Level of Education' w='45863' x='53507' y='57178'>
+                <zone fixed-size='280' h='41257' id='30' is-fixed='true' name='Limit Balances Grouped by Level of Education' w='45864' x='53506' y='57753'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1825,13 +1985,18 @@
       </layout-options>
       <style>
         <style-rule element='table'>
-          <format attr='background-color' value='#f0f3fa' />
+          <format attr='background-color' value='#dfedeb' />
         </style-rule>
         <style-rule element='dash-title'>
-          <format attr='border-width' value='4' />
           <format attr='border-style' value='solid' />
           <format attr='text-align' value='center' />
-          <format attr='border-color' value='#a0cbe8' />
+          <format attr='color' value='#f5f5f5' />
+          <format attr='border-width' value='4' />
+          <format attr='border-color' value='#666666' />
+          <format attr='background-color' value='#d4d4d4' />
+        </style-rule>
+        <style-rule element='dash-subtitle'>
+          <format attr='background-color' value='#e9edf5' />
         </style-rule>
       </style>
       <size sizing-mode='automatic' />
@@ -1849,10 +2014,10 @@
           <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='130' param='horz' w='98740' x='630' y='990'>
             <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='127' param='horz' w='98740' x='630' y='990'>
               <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='98020' id='125' w='98740' x='630' y='990'>
-                <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='87872' id='62' param='horz' w='98740' x='630' y='11138'>
-                  <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='87872' id='60' w='98740' x='630' y='11138'>
-                    <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='37996' id='5' param='vert' w='98740' x='630' y='61014'>
-                      <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' fixed-size='159' forceUpdate='true' h='20668' id='41' is-fixed='true' w='98740' x='630' y='61014'>
+                <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='86139' id='62' param='horz' w='98740' x='630' y='12871'>
+                  <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='86139' id='60' w='98740' x='630' y='12871'>
+                    <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='37247' id='5' param='vert' w='98740' x='630' y='61763'>
+                      <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' fixed-size='159' forceUpdate='true' h='20668' id='41' is-fixed='true' w='98740' x='630' y='61763'>
                         <formatted-text>
                           <run fontcolor='#000000' fontname='Times New Roman' fontsize='10'>Summary of findings:</run>
                           <run>Æ&#10;</run>
@@ -1871,7 +2036,7 @@
                           <format attr='margin' value='4' />
                         </zone-style>
                       </zone>
-                      <zone fixed-size='109' h='14480' id='124' is-fixed='true' name='Sheet 7' w='98740' x='630' y='81682'>
+                      <zone fixed-size='109' h='14480' id='124' is-fixed='true' name='Sheet 7' w='98740' x='630' y='82431'>
                         <layout-cache type-h='fixed' type-w='fixed' />
                         <zone-style>
                           <format attr='border-color' value='#000000' />
@@ -1881,7 +2046,7 @@
                         </zone-style>
                       </zone>
                     </zone>
-                    <zone h='27350' id='59' name='Sheet 6' w='67216' x='630' y='11138'>
+                    <zone h='26810' id='59' name='Sheet 6' w='67216' x='630' y='12871'>
                       <zone-style>
                         <format attr='border-color' value='#000000' />
                         <format attr='border-style' value='none' />
@@ -1889,7 +2054,7 @@
                         <format attr='margin' value='4' />
                       </zone-style>
                     </zone>
-                    <zone h='22526' id='71' name='Sheet 1' w='67216' x='630' y='38488'>
+                    <zone h='22082' id='71' name='Sheet 1' w='67216' x='630' y='39681'>
                       <zone-style>
                         <format attr='border-color' value='#000000' />
                         <format attr='border-style' value='none' />
@@ -1897,7 +2062,7 @@
                         <format attr='margin' value='4' />
                       </zone-style>
                     </zone>
-                    <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' h='49876' id='44' is-centered='0' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/Image 2020-11-27 at 1.53 PM (1).jpeg' w='31524' x='67846' y='11138'>
+                    <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' h='48892' id='44' is-centered='0' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/Image 2020-11-27 at 1.53 PM (1).jpeg' w='31524' x='67846' y='12871'>
                       <zone-style>
                         <format attr='border-color' value='#000000' />
                         <format attr='border-style' value='none' />
@@ -1907,7 +2072,7 @@
                     </zone>
                   </zone>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' fixed-size='70' h='10148' id='7' is-fixed='true' w='98740' x='630' y='990'>
+                <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' fixed-size='70' h='11881' id='7' is-fixed='true' w='98740' x='630' y='990'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1925,7 +2090,7 @@
             <format attr='margin' value='8' />
           </zone-style>
         </zone>
-        <zone _.fcp.SetMembershipControl.false...type='filter' _.fcp.SetMembershipControl.true...type-v2='filter' h='8540' id='64' name='Sheet 6' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:EDUCATION:qk]' values='database' w='13239' x='52403' y='11881' />
+        <zone _.fcp.SetMembershipControl.false...type='filter' _.fcp.SetMembershipControl.true...type-v2='filter' h='8540' id='64' name='Sheet 6' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:EDUCATION:qk]' values='database' w='13239' x='52009' y='12995' />
         <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' forceUpdate='true' h='4703' id='123' w='28132' x='69504' y='58540'>
           <formatted-text>
             <run fontcolor='#000000' fontname='Times New Roman'>Here, is a heatmap showing the overal correlations of the entire dataset.</run>
@@ -1945,9 +2110,9 @@
           </layout-options>
           <size maxheight='1250' minheight='1250' sizing-mode='vscroll' />
           <zones>
-            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='147' w='100000' x='0' y='0'>
-              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='146' param='vert' w='98740' x='630' y='990'>
-                <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' fixed-size='70' h='10148' id='7' w='98740' x='630' y='990'>
+            <zone _.fcp.SetMembershipControl.false...type='layout-basic' _.fcp.SetMembershipControl.true...type-v2='layout-basic' h='100000' id='189' w='100000' x='0' y='0'>
+              <zone _.fcp.SetMembershipControl.false...type='layout-flow' _.fcp.SetMembershipControl.true...type-v2='layout-flow' h='98020' id='188' param='vert' w='98740' x='630' y='990'>
+                <zone _.fcp.SetMembershipControl.false...type='title' _.fcp.SetMembershipControl.true...type-v2='title' fixed-size='70' h='11881' id='7' w='98740' x='630' y='990'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1956,7 +2121,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='filter' _.fcp.SetMembershipControl.true...type-v2='filter' h='8540' id='64' name='Sheet 6' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:EDUCATION:qk]' values='database' w='13239' x='52403' y='11881'>
+                <zone _.fcp.SetMembershipControl.false...type='filter' _.fcp.SetMembershipControl.true...type-v2='filter' h='8540' id='64' name='Sheet 6' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:EDUCATION:qk]' values='database' w='13239' x='52009' y='12995'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1965,7 +2130,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='211' h='27350' id='59' is-fixed='true' name='Sheet 6' w='67216' x='630' y='11138'>
+                <zone fixed-size='206' h='26810' id='59' is-fixed='true' name='Sheet 6' w='67216' x='630' y='12871'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1974,7 +2139,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' fixed-size='280' h='49876' id='44' is-centered='0' is-fixed='true' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/Image 2020-11-27 at 1.53 PM (1).jpeg' w='31524' x='67846' y='11138'>
+                <zone _.fcp.SetMembershipControl.false...type='bitmap' _.fcp.SetMembershipControl.true...type-v2='bitmap' fixed-size='280' h='48892' id='44' is-centered='0' is-fixed='true' is-scaled='1' param='/Users/jo-elle/Desktop/Data301/project/course-project-solo_305/images/Image 2020-11-27 at 1.53 PM (1).jpeg' w='31524' x='67846' y='12871'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -1983,7 +2148,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='172' h='22526' id='71' is-fixed='true' name='Sheet 1' w='67216' x='630' y='38488'>
+                <zone fixed-size='169' h='22082' id='71' is-fixed='true' name='Sheet 1' w='67216' x='630' y='39681'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -2004,7 +2169,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' fixed-size='159' forceUpdate='true' h='20668' id='41' w='98740' x='630' y='61014'>
+                <zone _.fcp.SetMembershipControl.false...type='text' _.fcp.SetMembershipControl.true...type-v2='text' fixed-size='159' forceUpdate='true' h='20668' id='41' w='98740' x='630' y='61763'>
                   <formatted-text>
                     <run fontcolor='#000000' fontname='Times New Roman' fontsize='10'>Summary of findings:</run>
                     <run>Æ&#10;</run>
@@ -2033,7 +2198,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='108' h='14480' id='124' is-fixed='true' name='Sheet 7' w='98740' x='630' y='81682'>
+                <zone fixed-size='108' h='14480' id='124' is-fixed='true' name='Sheet 7' w='98740' x='630' y='82431'>
                   <layout-cache type-h='fixed' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -2093,9 +2258,9 @@
     </dashboard>
   </dashboards>
   <windows source-height='30'>
-    <window class='dashboard' maximized='true' name='Dataset Overview and Description'>
+    <window class='dashboard' name='Dataset Overview and Description'>
       <viewpoints />
-      <active id='-1' />
+      <active id='7' />
       <simple-id uuid='{F477905B-5E60-4B39-87D4-F045FABCB1C0}' />
     </window>
     <window class='dashboard' name='Exploratory Analysis'>
@@ -2105,7 +2270,7 @@
         </viewpoint>
         <viewpoint name='Sheet 1' />
       </viewpoints>
-      <active id='22' />
+      <active id='15' />
       <simple-id uuid='{F09CD572-B041-4B6E-A921-EC6C7CD900F1}' />
     </window>
     <window class='dashboard' name='Research question'>
@@ -2117,7 +2282,7 @@
           <zoom type='entire-view' />
         </viewpoint>
       </viewpoints>
-      <active id='25' />
+      <active id='38' />
       <simple-id uuid='{5E6C23E7-A8A6-4A7A-B4BC-50DB3662E268}' />
     </window>
     <window class='dashboard' name='Research question 2'>
@@ -2128,7 +2293,7 @@
         </viewpoint>
         <viewpoint name='Sheet 7' />
       </viewpoints>
-      <active id='-1' />
+      <active id='59' />
       <simple-id uuid='{7ED15B1B-C635-4EF9-92ED-5EF51AB30B48}' />
     </window>
     <window class='dashboard' name='Conclusion'>
@@ -2215,6 +2380,34 @@
       </cards>
       <simple-id uuid='{6FF0BE3E-CC10-4337-A92D-F4907926873B}' />
     </window>
+    <window class='worksheet' name='Sheet 9'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.13tdmsc0ivsgm215zsn3t1usmpld].[none:Default:ok]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{7288F814-9B4A-4067-BD3C-C9CCF307A67F}' />
+    </window>
     <window class='worksheet' name='Sheet 6'>
       <cards>
         <edge name='left'>
@@ -2267,7 +2460,7 @@
       </cards>
       <simple-id uuid='{1626DD85-2D88-4AA3-953D-8A46A7B7C9B7}' />
     </window>
-    <window class='worksheet' name='Limit Balances Grouped by Level of Education' tab-color='#72bcbb'>
+    <window class='worksheet' maximized='true' name='Limit Balances Grouped by Level of Education' tab-color='#72bcbb'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -2338,7 +2531,7 @@
     </window>
     <window class='dashboard' name='Project'>
       <viewpoints />
-      <active id='4' />
+      <active id='-1' />
       <simple-id uuid='{9F853F70-EE76-4364-8F8B-C211538289C2}' />
     </window>
     <window class='dashboard' name='Story 2'>
